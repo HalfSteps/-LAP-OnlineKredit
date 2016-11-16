@@ -221,6 +221,13 @@
     <Content Include="Content\css\fonts\ptc75f-webfont.svg" />
     <Content Include="Content\css\fonts\ptc75f-webfont.ttf" />
     <Content Include="Content\css\fonts\ptc75f-webfont.woff" />
+    <Content Include="Content\css\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\css\fonts\FontAwesome.otf" />
+    <Content Include="Content\css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\css\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\css\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\easing.js" />
     <Content Include="Scripts\functions.js" />
