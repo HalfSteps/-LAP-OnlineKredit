@@ -16,13 +16,20 @@ namespace _DB_AG__Online_Kredit.Controllers
         }
 
 
-        public ActionResult KreditRechner(KreditRechnerModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                Kunde new
-            }
-        }
+        //public ActionResult KreditRechner(KreditRechnerModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        /// Kunde newKunde = Krediterwaltung.ErzeugeKunde();
+        //        /// 
+        //        ///if ( newKunde != null && KreditVerwaltung.KreditSpeichern(model.KreditBetrag, model.Laufzeit, newKunde.ID))
+        //        ///{
+        //        ///TempData["idKunde] = neuerKunde.ID;
+        //        ///return RedirectToAction("FinanzielleSituation");
+        //    }
+        //}
+
+        //return View();
 
     }
 }

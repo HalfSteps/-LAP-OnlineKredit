@@ -285,6 +285,12 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\[DB-AG] Online_Kredit.BusinessLogic\[DB-AG] Online_Kredit.BusinessLogic.csproj">
+      <Project>{62906a5d-bc30-45bf-b53c-c21af54eb825}</Project>
+      <Name>[DB-AG] Online_Kredit.BusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
