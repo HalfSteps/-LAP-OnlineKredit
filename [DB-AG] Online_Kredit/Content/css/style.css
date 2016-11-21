@@ -44,7 +44,8 @@ textarea { overflow: auto; }
 
 .header { background: url(images/header.png) repeat 0 0; }
 .header .shell { padding: 21px 32px 0; width: 918px; background: url(images/header-shell.png) no-repeat center 0; box-shadow: 0px -10px 9px rgba(0,0,0,0.7); -moz-box-shadow: 0px -10px 9px rgba(0,0,0,0.7); -webkit-box-shadow: 0px -10px 9px rgba(0,0,0,0.7); -o-box-shadow: 0px -3px 10px 9rgba(0,0,0,0.7) }
-.header-top { height: 72px;  }
+.header-top { height: 72px; }
+#header{position:fixed; z-index: 1000;}
 
 #logo { width: 142px; font-size: 0; line-height: 0; float: left; }
 #logo a { height: 57px; display: block;  background: url(images/logo.png) no-repeat 0 0; text-indent: -4000px; }
