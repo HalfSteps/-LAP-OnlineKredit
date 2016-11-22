@@ -148,8 +148,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Models\FinanzielleSituationModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KreditController.cs" />
+    <Compile Include="Models\PersönlicheDatenModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
