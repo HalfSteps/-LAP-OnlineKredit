@@ -17,7 +17,7 @@ namespace _DB_AG__Online_Kredit.Models
         [Required(ErrorMessage = "Ungültige Eingabe")]
         [Display(Name = "Gewünschte Laufzeit")]
         [Range(4, 90, ErrorMessage = "Laufzeit liegt außerhalb des Bereichs on 4 bis 90 Monaten")]
-        public int Laufzeit { get; set; }
+        public short Laufzeit { get; set; }
 
     }
 }

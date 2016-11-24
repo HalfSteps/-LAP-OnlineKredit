@@ -93,7 +93,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <a id="next" href="#"></a>
             </div>
         </div>
-    </div>
+    @*</div>*@
+
 
 
 
@@ -101,20 +102,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <!---->
 
 
-        </div>
+        @*</div>*@
         <!--header end here-->
         <!--top nav start here-->
         <div class="top-nav">
             <nav class="navbar navbar-default">
                 <div class="container">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         Menu
                     </button>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="hvr-bounce-to-bottom active"><a href="@Url.Action("Index", "Home")">Deutsche Bank AG</a></li>
-                            <li class="hvr-bounce-to-bottom"><a href="@Url.Action("KreditRahmen", "KonsumKredit")" class="scroll">Kredit-Rechner</a></li>
+                            <li class="hvr-bounce-to-bottom"><a href="@Url.Action("KreditRechner", "Kredit")" class="scroll">Kredit-Rechner</a></li>
                             <li class="hvr-bounce-to-bottom"><a href="@Url.Action("Kontakt", "Home")" class="scroll">Kontakt</a></li>
                             <li class="form-group">
                                 <form action="#" method="post">
@@ -132,7 +133,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </nav>
         </div>
 
-        @RenderBody()
+    @RenderBody()
+
 
         <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 0;"> </span></a>
         <!--contact-->
@@ -147,19 +149,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 });
             });
         </script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                /*
-                var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-                };
-                */
-                $().UItoTop({ easingType: 'easeOutQuart' });
-            });
-        </script>
 
         <!-- //end-smoth-scrolling -->
         <!--script-->
@@ -171,6 +160,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
         @RenderSection("scripts", required: false)
         <!--script-->
-    </div>
+    @*</div>*@
 </body>
 </html>

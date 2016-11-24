@@ -4,9 +4,14 @@
     ViewBag.Title = "KreditRechner";
 }
 
-<div id="Choco_content" style="margin-top: 20px">
+<div id="content" style="margin-top: 20px">
     <h2>KreditRechner</h2>
 
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    }
     <div class="form-horizontal">
         <div class="row" style="margin-top: 20px">
             <div class="col-lg-offset_4 col-md-offset-4 col-lg-6 col-md-6">
@@ -46,5 +51,32 @@
             
 
     </div>
-         
+      }   
+
+
+    @section Scripts {
+
+        <script type="text/javascript">
+        //http://ionden.com/a/plugins/ion.rangeSlider/en.html
+        $(document).ready(function () {
+            $("#gewuenschterBetrag").ionRangeSlider({
+                min: 10000,
+                max: 100000,
+                from: 25000,
+                grid: true,
+                prefix: "€ ",
+                step: 1000
+            });
+            $("#laufzeit").ionRangeSlider({
+                min: 12,
+                max: 120,
+                from: 36,
+                grid: true,
+                prefix: "Monate ",
+                step: 1
+            });
+        });
+        </script>
+    }
+
 </div>
