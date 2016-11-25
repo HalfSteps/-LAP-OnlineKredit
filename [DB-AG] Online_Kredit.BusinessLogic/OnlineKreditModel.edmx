@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="dbKreditRechnerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="dbKreditRechnerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblArbeitgeber">
           <Key>
             <PropertyRef Name="IDArbeitgeber" />
@@ -88,6 +88,7 @@
             <PropertyRef Name="IDKredit" />
           </Key>
           <Property Name="IDKredit" Type="int" Nullable="false" />
+          <Property Name="FKKunde" Type="int" Nullable="false" />
           <Property Name="GewuenschterKredit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="GewuenschteLaufzeit" Type="smallint" Nullable="false" />
           <Property Name="KreditBewilligt" Type="bit" Nullable="false" />
@@ -230,15 +231,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblKredit__IDKre__3D5E1FD2">
+        <Association Name="FK__tblKredit__FKKun__49C3F6B7">
           <End Role="tblKunde" Type="Self.tblKunde" Multiplicity="1" />
-          <End Role="tblKredit" Type="Self.tblKredit" Multiplicity="0..1" />
+          <End Role="tblKredit" Type="Self.tblKredit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblKunde">
               <PropertyRef Name="IDKunde" />
             </Principal>
             <Dependent Role="tblKredit">
-              <PropertyRef Name="IDKredit" />
+              <PropertyRef Name="FKKunde" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -371,7 +372,7 @@
             <End Role="tblKunde" EntitySet="tblKunde" />
             <End Role="tblKontoDaten" EntitySet="tblKontoDaten" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblKredit__IDKre__3D5E1FD2" Association="Self.FK__tblKredit__IDKre__3D5E1FD2">
+          <AssociationSet Name="FK__tblKredit__FKKun__49C3F6B7" Association="Self.FK__tblKredit__FKKun__49C3F6B7">
             <End Role="tblKunde" EntitySet="tblKunde" />
             <End Role="tblKredit" EntitySet="tblKredit" />
           </AssociationSet>
@@ -404,8 +405,7 @@
             <End Role="tblOrt" EntitySet="tblOrt" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="dbKreditRechnerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -498,16 +498,6 @@
           <Property Name="Bank" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKontoD__IDKon__3A81B327" FromRole="tblKontoDaten" ToRole="tblKunde" />
         </EntityType>
-        <EntityType Name="KreditWunsch">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Betrag" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Laufzeit" Type="Int16" Nullable="false" />
-          <Property Name="KreditBewilligt" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKredit__IDKre__3D5E1FD2" FromRole="tblKredit" ToRole="tblKunde" />
-        </EntityType>
         <EntityType Name="Kunde">
           <Key>
             <PropertyRef Name="ID" />
@@ -530,11 +520,11 @@
           <NavigationProperty Name="IdentifikationsArt" Relationship="Self.FK__tblKunde__FKIden__2A4B4B5E" FromRole="tblKunde" ToRole="tblIdentifikationsArt" />
           <NavigationProperty Name="KontaktDaten" Relationship="Self.FK__tblKontak__IDKon__2D27B809" FromRole="tblKunde" ToRole="tblKontaktDaten" />
           <NavigationProperty Name="KontoDaten" Relationship="Self.FK__tblKontoD__IDKon__3A81B327" FromRole="tblKunde" ToRole="tblKontoDaten" />
-          <NavigationProperty Name="KreditWunsch" Relationship="Self.FK__tblKredit__IDKre__3D5E1FD2" FromRole="tblKunde" ToRole="tblKredit" />
           <NavigationProperty Name="Schulabschluss" Relationship="Self.FK__tblKunde__FKSchu__29572725" FromRole="tblKunde" ToRole="tblSchulabschluss" />
           <NavigationProperty Name="Staatsangehoerigkeit" Relationship="Self.FK__tblKunde__FKStaa__276EDEB3" FromRole="tblKunde" ToRole="tblLand" />
           <NavigationProperty Name="Titel" Relationship="Self.FK__tblKunde__FKTite__25869641" FromRole="tblKunde" ToRole="tblTitel" />
           <NavigationProperty Name="Wohnart" Relationship="Self.FK__tblKunde__FKWohn__286302EC" FromRole="tblKunde" ToRole="tblWohnart" />
+          <NavigationProperty Name="tblKredit" Relationship="dbKreditRechnerModel.FK__tblKredit__FKKun__49C3F6B7" FromRole="Kunde" ToRole="tblKredit" />
         </EntityType>
         <EntityType Name="Land">
           <Key>
@@ -688,18 +678,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblKredit__IDKre__3D5E1FD2">
-          <End Role="tblKunde" Type="dbKreditRechnerModel.Kunde" Multiplicity="1" />
-          <End Role="tblKredit" Type="dbKreditRechnerModel.KreditWunsch" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="tblKunde">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="tblKredit">
-              <PropertyRef Name="ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__tblKunde__FKSchu__29572725">
           <End Role="tblSchulabschluss" Type="dbKreditRechnerModel.Schulabschluss" Multiplicity="0..1" />
           <End Role="tblKunde" Type="dbKreditRechnerModel.Kunde" Multiplicity="*" />
@@ -770,7 +748,6 @@
           <EntitySet Name="AlleIdentifikationsArten" EntityType="dbKreditRechnerModel.IdentifikationsArt" />
           <EntitySet Name="AlleKontaktDaten" EntityType="dbKreditRechnerModel.KontaktDaten" />
           <EntitySet Name="AlleKontoDaten" EntityType="dbKreditRechnerModel.KontoDaten" />
-          <EntitySet Name="AlleKreditWünsche" EntityType="dbKreditRechnerModel.KreditWunsch" />
           <EntitySet Name="AlleKunden" EntityType="dbKreditRechnerModel.Kunde" />
           <EntitySet Name="AlleLänder" EntityType="dbKreditRechnerModel.Land" />
           <EntitySet Name="AlleOrte" EntityType="dbKreditRechnerModel.Ort" />
@@ -813,10 +790,6 @@
             <End Role="tblKunde" EntitySet="AlleKunden" />
             <End Role="tblKontoDaten" EntitySet="AlleKontoDaten" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblKredit__IDKre__3D5E1FD2" Association="Self.FK__tblKredit__IDKre__3D5E1FD2">
-            <End Role="tblKunde" EntitySet="AlleKunden" />
-            <End Role="tblKredit" EntitySet="AlleKreditWünsche" />
-          </AssociationSet>
           <AssociationSet Name="FK__tblKunde__FKSchu__29572725" Association="Self.FK__tblKunde__FKSchu__29572725">
             <End Role="tblSchulabschluss" EntitySet="AlleSchulabschluesse" />
             <End Role="tblKunde" EntitySet="AlleKunden" />
@@ -837,7 +810,35 @@
             <End Role="tblLand" EntitySet="AlleLänder" />
             <End Role="tblOrt" EntitySet="AlleOrte" />
           </AssociationSet>
+          <EntitySet Name="AlleKreditWünsche" EntityType="dbKreditRechnerModel.KreditWunsch" />
+          <AssociationSet Name="FK__tblKredit__FKKun__49C3F6B7" Association="dbKreditRechnerModel.FK__tblKredit__FKKun__49C3F6B7">
+            <End Role="Kunde" EntitySet="AlleKunden" />
+            <End Role="tblKredit" EntitySet="AlleKreditWünsche" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="KreditWunsch">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FKKunde" Type="Int32" Nullable="false" />
+          <Property Name="Betrag" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Laufzeit" Type="Int16" Nullable="false" />
+          <Property Name="Bewilligt" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Kunde" Relationship="dbKreditRechnerModel.FK__tblKredit__FKKun__49C3F6B7" FromRole="tblKredit" ToRole="Kunde" />
+        </EntityType>
+        <Association Name="FK__tblKredit__FKKun__49C3F6B7">
+          <End Type="dbKreditRechnerModel.Kunde" Role="Kunde" Multiplicity="1" />
+          <End Type="dbKreditRechnerModel.KreditWunsch" Role="tblKredit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunde">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblKredit">
+              <PropertyRef Name="FKKunde" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -931,16 +932,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AlleKreditWünsche">
-            <EntityTypeMapping TypeName="dbKreditRechnerModel.KreditWunsch">
-              <MappingFragment StoreEntitySet="tblKredit">
-                <ScalarProperty Name="ID" ColumnName="IDKredit" />
-                <ScalarProperty Name="Betrag" ColumnName="GewuenschterKredit" />
-                <ScalarProperty Name="Laufzeit" ColumnName="GewuenschteLaufzeit" />
-                <ScalarProperty Name="KreditBewilligt" ColumnName="KreditBewilligt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AlleKunden">
             <EntityTypeMapping TypeName="dbKreditRechnerModel.Kunde">
               <MappingFragment StoreEntitySet="tblKunde">
@@ -998,6 +989,17 @@
               <MappingFragment StoreEntitySet="tblWohnart">
                 <ScalarProperty Name="ID" ColumnName="IDWohnart" />
                 <ScalarProperty Name="Bezeichnung" ColumnName="Wohnart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlleKreditWünsche">
+            <EntityTypeMapping TypeName="dbKreditRechnerModel.KreditWunsch">
+              <MappingFragment StoreEntitySet="tblKredit">
+                <ScalarProperty Name="Bewilligt" ColumnName="KreditBewilligt" />
+                <ScalarProperty Name="Laufzeit" ColumnName="GewuenschteLaufzeit" />
+                <ScalarProperty Name="Betrag" ColumnName="GewuenschterKredit" />
+                <ScalarProperty Name="FKKunde" ColumnName="FKKunde" />
+                <ScalarProperty Name="ID" ColumnName="IDKredit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

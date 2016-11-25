@@ -34,12 +34,12 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
         public DbSet<IdentifikationsArt> AlleIdentifikationsArten { get; set; }
         public DbSet<KontaktDaten> AlleKontaktDaten { get; set; }
         public DbSet<KontoDaten> AlleKontoDaten { get; set; }
-        public DbSet<KreditWunsch> AlleKreditWünsche { get; set; }
         public DbSet<Kunde> AlleKunden { get; set; }
         public DbSet<Land> AlleLänder { get; set; }
         public DbSet<Ort> AlleOrte { get; set; }
         public DbSet<Schulabschluss> AlleSchulabschluesse { get; set; }
         public DbSet<Titel> AlleTitel { get; set; }
         public DbSet<Wohnart> AlleWohnarten { get; set; }
+        public DbSet<KreditWunsch> AlleKreditWünsche { get; set; }
     }
 }

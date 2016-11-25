@@ -14,6 +14,11 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
     
     public partial class Kunde
     {
+        public Kunde()
+        {
+            this.tblKredit = new HashSet<KreditWunsch>();
+        }
+    
         public int ID { get; set; }
         public string Vorname { get; set; }
         public string Nachname { get; set; }
@@ -33,10 +38,10 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
         public virtual IdentifikationsArt IdentifikationsArt { get; set; }
         public virtual KontaktDaten KontaktDaten { get; set; }
         public virtual KontoDaten KontoDaten { get; set; }
-        public virtual KreditWunsch KreditWunsch { get; set; }
         public virtual Schulabschluss Schulabschluss { get; set; }
         public virtual Land Staatsangehoerigkeit { get; set; }
         public virtual Titel Titel { get; set; }
         public virtual Wohnart Wohnart { get; set; }
+        public virtual ICollection<KreditWunsch> tblKredit { get; set; }
     }
 }

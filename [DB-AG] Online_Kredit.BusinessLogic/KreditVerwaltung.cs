@@ -103,6 +103,8 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
 
 
 
+
+
         public static bool FinanzielleSituationSpeichern(double nettoEinkommen, double ratenVerpflichtungen, double wohnkosten, double einkünfteAlimenteUnterhalt, double unterhaltsZahlungen, int idKunde)
             {
                 Debug.WriteLine("KonsumKreditVerwaltung - FinanzielleSituationSpeichern");

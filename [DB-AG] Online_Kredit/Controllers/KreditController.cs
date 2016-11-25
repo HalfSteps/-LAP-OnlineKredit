@@ -26,7 +26,7 @@ namespace _DB_AG__Online_Kredit.Controllers
                 
                 if (newKunde != null && KreditVerwaltung.KreditSpeichern(model.KreditBetrag, model.Laufzeit, newKunde.ID))
                 {
-                    TempData["idKunde"] = newKunde.ID;
+                    TempData["id"] = newKunde.ID;
                     return RedirectToAction("FinanzielleSituation");
                 }
         }
@@ -35,42 +35,49 @@ namespace _DB_AG__Online_Kredit.Controllers
 
     }
 
-    public ActionResult FinanzielleSituation()
-    {
-        FinanzielleSituationModel model = new FinanzielleSituationModel()
+        [HttpGet]
+        public ActionResult FinanzielleSituation()
         {
-            ID = int.Parse(TempData["idKunde"].ToString())
-        };
 
-        return View();
-
-    }
-
-
-    public ActionResult FinanzielleSituation(FinanzielleSituationModel model)
-    {
-
-        if (ModelState.IsValid)
-        {
-            if (KreditVerwaltung.FinanzielleSituationSpeichern(model.MonatsEinkommenNetto, model.Raten, model.Wohnkosten, model.EinkuenfteAlimenteUnterhalt, model.AusgabenAlimenteUnterhalt, model.ID))
+            FinanzielleSituationModel model = new FinanzielleSituationModel()
             {
+                ID = int.Parse(Request.Cookies["id"].Value)
+            };
 
-                TempData["idKunde"] = model.ID;
-                return RedirectToAction("PersönlicheDaten");
-            }
+            return View(model);
         }
 
-        return View();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FinanzielleSituation(FinanzielleSituationModel model)
+        {
 
-    }
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+                if (KreditVerwaltung.FinanzielleSituationSpeichern(
+                                                model.MonatsEinkommenNetto,
+                                                model.Raten,
+                                                model.Wohnkosten,
+                                                model.EinkuenfteAlimenteUnterhalt,
+                                                model.AusgabenAlimenteUnterhalt,
+                                                model.ID))
+                {
+                    return RedirectToAction("PersönlicheDaten");
+                }
+            }
+
+            return View(model);
+        }
 
 
-    public ActionResult PersönlicheDaten()
+
+        public ActionResult PersönlicheDaten()
     {
 
         PersönlicheDatenModel model = new PersönlicheDatenModel()
         {
-            ID_Kunde = int.Parse(TempData["idKunde"].ToString())
+            ID_Kunde = int.Parse(TempData["id"].ToString())
 
         };
 
