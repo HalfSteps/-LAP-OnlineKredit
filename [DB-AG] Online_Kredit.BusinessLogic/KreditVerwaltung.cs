@@ -19,18 +19,19 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
                 Debug.WriteLine("KonsumKreditVerwaltung - ErzeugeKunde");
                 Debug.Indent();
 
-                Kunde neuerKunde = null;
+                Kunde newKunde = null;
 
                 try
                 {
                     using (var context = new dbKreditRechnerEntities())
                     {
-                        neuerKunde = new BusinessLogic.Kunde()
-                        {
-                            Vorname = "anonym",
-                            Nachname = "anonym"
+                    newKunde = new BusinessLogic.Kunde()
+                    {
+                        Vorname = "anonym",
+                        Nachname = "anonym",
+                        Geschlecht = "w"
                         };
-                        context.AlleKunden.Add(neuerKunde);
+                        context.AlleKunden.Add(newKunde);
 
                         int anzahlZeilenBetroffen = context.SaveChanges();
                         Debug.WriteLine($"{anzahlZeilenBetroffen} Kunden angelegt!");
@@ -46,11 +47,11 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
                 }
 
                 Debug.Unindent();
-                return neuerKunde;
+                return newKunde;
             }
 
             /// <summary>
-            /// Speichert zu einer übergebenene ID_Kunde den Wunsch Kredit und dessen Laufzeit ab
+            /// Speichert zu einer übergebenene ID den Wunsch Kredit und dessen Laufzeit ab
             /// </summary>
             /// <param name="kreditBetrag">die Höhe des gewünschten Kredits</param>
             /// <param name="laufzeit">die Laufzeit des gewünschten Kredits</param>
@@ -58,7 +59,7 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
             /// <returns>true wenn Eintragung gespeichert werden konnte und der Kunde existiert, ansonsten false</returns>
             public static bool KreditSpeichern(double kreditBetrag, short laufzeit, int idKunde)
             {
-                Debug.WriteLine("KonsumKreditVerwaltung - KreditRahmenSpeichern");
+                Debug.WriteLine("KonsumKreditVerwaltung - KreditSpeichern");
                 Debug.Indent();
 
                 bool erfolgreich = false;
@@ -73,24 +74,29 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
 
                         if (aktKunde != null)
                         {
-                            KreditWunsch neuerKreditWunsch = new KreditWunsch()
-                            {
-                                Betrag = (decimal)kreditBetrag,
-                                Laufzeit = laufzeit,
-                                ID = idKunde
+
+                        Debug.WriteLine("KreditSpeichern: Create KreditWunsch");
+
+                        KreditWunsch neuerKreditWunsch = new KreditWunsch()
+                        {
+                            Betrag = (decimal)kreditBetrag,
+                            Laufzeit = laufzeit,
+                            FKKunde = idKunde
                             };
 
                             context.AlleKreditWünsche.Add(neuerKreditWunsch);
                         }
 
-                        int anzahlZeilenBetroffen = context.SaveChanges();
-                        erfolgreich = anzahlZeilenBetroffen >= 1;
-                        Debug.WriteLine($"{anzahlZeilenBetroffen} KreditRahmen gespeichert!");
-                    }
+                    Debug.WriteLine("KreditSpeichern: DBContextSave");
+                    int anzahlZeilenBetroffen = context.SaveChanges();
+                    Debug.WriteLine("KreditSpeichern: BoolchangeErfolgreich");
+                    erfolgreich = anzahlZeilenBetroffen >= 1;
+                    Debug.WriteLine($"{anzahlZeilenBetroffen} Kredit gespeichert!");
+                }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Fehler in KreditRahmenSpeichern");
+                    Debug.WriteLine("Fehler in KreditSpeichern");
                     Debug.Indent();
                     Debug.WriteLine(ex.Message);
                     Debug.Unindent();
@@ -107,7 +113,7 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
 
         public static bool FinanzielleSituationSpeichern(double nettoEinkommen, double ratenVerpflichtungen, double wohnkosten, double einkünfteAlimenteUnterhalt, double unterhaltsZahlungen, int idKunde)
             {
-                Debug.WriteLine("KonsumKreditVerwaltung - FinanzielleSituationSpeichern");
+                Debug.WriteLine("KreditVerwaltung - FinanzielleSituationSpeichern");
                 Debug.Indent();
 
                 bool erfolgreich = false;

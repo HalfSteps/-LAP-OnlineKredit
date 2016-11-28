@@ -2,6 +2,7 @@
 using _DB_AG__Online_Kredit.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,22 +15,26 @@ namespace _DB_AG__Online_Kredit.Controllers
         // GET: Kredit
         public ActionResult KreditRechner()
         {
+            Debug.WriteLine("HttpGet: Kredit/KreditRechner");
+
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult KreditRechner(KreditRechnerModel model)
         {
+            Debug.WriteLine("HttpPost: Kredit/KreditRechner");
+
             if (ModelState.IsValid)
             {
                  Kunde newKunde = KreditVerwaltung.ErzeugeKunde();
                 
                 if (newKunde != null && KreditVerwaltung.KreditSpeichern(model.KreditBetrag, model.Laufzeit, newKunde.ID))
                 {
-                    TempData["id"] = newKunde.ID;
-                    return RedirectToAction("FinanzielleSituation");
+                    Response.Cookies.Add(new HttpCookie("id", newKunde.ID.ToString()));
                 }
-        }
+            }
 
         return View(model);
 
@@ -38,10 +43,11 @@ namespace _DB_AG__Online_Kredit.Controllers
         [HttpGet]
         public ActionResult FinanzielleSituation()
         {
+            Debug.WriteLine("HttpGet: Kredit/FinanzielleSituation");
 
             FinanzielleSituationModel model = new FinanzielleSituationModel()
             {
-                ID = int.Parse(Request.Cookies["id"].Value)
+                ID_Kunde = int.Parse(Request.Cookies["id"].Value)
             };
 
             return View(model);
@@ -52,6 +58,8 @@ namespace _DB_AG__Online_Kredit.Controllers
         public ActionResult FinanzielleSituation(FinanzielleSituationModel model)
         {
 
+            Debug.WriteLine("HttpPost: Kredit/FinanzielleSituation");
+
             if (ModelState.IsValid)
             {
                 /// speichere Daten über BusinessLogic
@@ -61,7 +69,7 @@ namespace _DB_AG__Online_Kredit.Controllers
                                                 model.Wohnkosten,
                                                 model.EinkuenfteAlimenteUnterhalt,
                                                 model.AusgabenAlimenteUnterhalt,
-                                                model.ID))
+                                                model.ID_Kunde))
                 {
                     return RedirectToAction("PersönlicheDaten");
                 }

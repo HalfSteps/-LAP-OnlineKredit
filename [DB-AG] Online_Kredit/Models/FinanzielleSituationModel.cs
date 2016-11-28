@@ -18,6 +18,6 @@ namespace _DB_AG__Online_Kredit.Models
 
         public double Raten { get; set; }
 
-        public int ID { get; set; }
+        public int ID_Kunde { get; set; }
     }
 }
