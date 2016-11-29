@@ -87,7 +87,7 @@
           <Key>
             <PropertyRef Name="IDKredit" />
           </Key>
-          <Property Name="IDKredit" Type="int" Nullable="false" />
+          <Property Name="IDKredit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FKKunde" Type="int" Nullable="false" />
           <Property Name="GewuenschterKredit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="GewuenschteLaufzeit" Type="smallint" Nullable="false" />
@@ -231,7 +231,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblKredit__FKKun__49C3F6B7">
+        <Association Name="FK__tblKredit__FKKun__5CD6CB2B">
           <End Role="tblKunde" Type="Self.tblKunde" Multiplicity="1" />
           <End Role="tblKredit" Type="Self.tblKredit" Multiplicity="*" />
           <ReferentialConstraint>
@@ -372,7 +372,7 @@
             <End Role="tblKunde" EntitySet="tblKunde" />
             <End Role="tblKontoDaten" EntitySet="tblKontoDaten" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblKredit__FKKun__49C3F6B7" Association="Self.FK__tblKredit__FKKun__49C3F6B7">
+          <AssociationSet Name="FK__tblKredit__FKKun__5CD6CB2B" Association="Self.FK__tblKredit__FKKun__5CD6CB2B">
             <End Role="tblKunde" EntitySet="tblKunde" />
             <End Role="tblKredit" EntitySet="tblKredit" />
           </AssociationSet>
@@ -524,7 +524,7 @@
           <NavigationProperty Name="Staatsangehoerigkeit" Relationship="Self.FK__tblKunde__FKStaa__276EDEB3" FromRole="tblKunde" ToRole="tblLand" />
           <NavigationProperty Name="Titel" Relationship="Self.FK__tblKunde__FKTite__25869641" FromRole="tblKunde" ToRole="tblTitel" />
           <NavigationProperty Name="Wohnart" Relationship="Self.FK__tblKunde__FKWohn__286302EC" FromRole="tblKunde" ToRole="tblWohnart" />
-          <NavigationProperty Name="tblKredit" Relationship="dbKreditRechnerModel.FK__tblKredit__FKKun__49C3F6B7" FromRole="Kunde" ToRole="tblKredit" />
+          <NavigationProperty Name="KreditWunsch" Relationship="dbKreditRechnerModel.FK__tblKredit__FKKun__49C3F6B7" FromRole="Kunde" ToRole="tblKredit" />
         </EntityType>
         <EntityType Name="Land">
           <Key>

@@ -28,17 +28,18 @@ namespace _DB_AG__Online_Kredit.Controllers
 
             if (ModelState.IsValid)
             {
-                 Kunde newKunde = KreditVerwaltung.ErzeugeKunde();
-                
+                Kunde newKunde = KreditVerwaltung.ErzeugeKunde();
+
                 if (newKunde != null && KreditVerwaltung.KreditSpeichern(model.KreditBetrag, model.Laufzeit, newKunde.ID))
                 {
                     Response.Cookies.Add(new HttpCookie("id", newKunde.ID.ToString()));
+                    return RedirectToAction("FinanzielleSituation");
                 }
             }
 
-        return View(model);
+            return View(model);
 
-    }
+        }
 
         [HttpGet]
         public ActionResult FinanzielleSituation()
@@ -71,7 +72,7 @@ namespace _DB_AG__Online_Kredit.Controllers
                                                 model.AusgabenAlimenteUnterhalt,
                                                 model.ID_Kunde))
                 {
-                    return RedirectToAction("PersönlicheDaten");
+                    return RedirectToAction("Arbeitgeber");
                 }
             }
 
@@ -79,54 +80,89 @@ namespace _DB_AG__Online_Kredit.Controllers
         }
 
 
-
-        public ActionResult PersönlicheDaten()
-    {
-
-        PersönlicheDatenModel model = new PersönlicheDatenModel()
+        [HttpGet]
+        public ActionResult Arbeitgeber()
         {
-            ID_Kunde = int.Parse(TempData["id"].ToString())
+            Debug.WriteLine("GET - KonsumKredit - Arbeitgeber");
 
-        };
+            //List<BeschaeftigungsArtModel> alleBeschaeftigungen = new List<BeschaeftigungsArtModel>();
+            //List<BrancheModel> alleBranchen = new List<BrancheModel>();
 
-        return View();
+            //foreach (var branche in KreditVerwaltung.BranchenLaden())
+            //{
+            //    alleBranchen.Add(new BrancheModel()
+            //    {
+            //        ID = branche.ID.ToString(),
+            //        Bezeichnung = branche.Bezeichnung
+            //    });
+            //}
+
+            //foreach (var beschaeftigungsArt in KreditVerwaltung.BeschaeftigungsArtenLaden())
+            //{
+            //    alleBeschaeftigungen.Add(new BeschaeftigungsArtModel()
+            //    {
+            //        ID = beschaeftigungsArt.ID.ToString(),
+            //        Bezeichnung = beschaeftigungsArt.Bezeichnung
+            //    });
+            //}
+
+            ArbeitgeberModel model = new ArbeitgeberModel()
+            {
+                //AlleBeschaeftigungen = alleBeschaeftigungen,
+                //AlleBranchen = alleBranchen,
+                ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
+            };
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public ActionResult Arbeitgeber(ArbeitgeberModel model)
+        {
+            return View();
+        }
+
+        public ActionResult KontoInformationen()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult PersönlicheDaten()
+        {
+
+            PersönlicheDatenModel model = new PersönlicheDatenModel()
+            {
+                ID_Kunde = int.Parse(TempData["id"].ToString())
+
+            };
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PersönlicheDaten(PersönlicheDatenModel model)
+        {
+            return View();
+        }
+
+
+        //public ActionResult KontoInformationen(KontoInformationenModel model)
+        //{
+        //    return View();
+        //}
+
+        public ActionResult Zusammenfassung()
+        {
+            return View();
+        }
+
+        //public ActionResult Zusammenfassung(ZusammenfassungModel model)
+        //{
+        //    return View();
+        //}
+
     }
-
-
-    public ActionResult PersönlicheDaten(PersönlicheDatenModel model)
-    {
-        return View();
-    }
-
-    public ActionResult Arbeitgeber()
-    {
-        return View();
-    }
-
-    //public ActionResult Arbeitgeber(ArbeitgeberModel model)
-    //{
-    //    return View();
-    //}
-
-    public ActionResult KontoInformationen()
-    {
-        return View();
-    }
-
-    //public ActionResult KontoInformationen(KontoInformationenModel model)
-    //{
-    //    return View();
-    //}
-
-    public ActionResult Zusammenfassung()
-    {
-        return View();
-    }
-
-    //public ActionResult Zusammenfassung(ZusammenfassungModel model)
-    //{
-    //    return View();
-    //}
-
-}
 }
