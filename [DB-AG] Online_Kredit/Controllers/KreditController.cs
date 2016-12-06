@@ -41,6 +41,8 @@ namespace _DB_AG__Online_Kredit.Controllers
 
         }
 
+
+
         [HttpGet]
         public ActionResult FinanzielleSituation()
         {
@@ -80,37 +82,38 @@ namespace _DB_AG__Online_Kredit.Controllers
         }
 
 
+
         [HttpGet]
         public ActionResult Arbeitgeber()
         {
-            Debug.WriteLine("GET - KonsumKredit - Arbeitgeber");
+            Debug.WriteLine("GET - Kredit - Arbeitgeber");
 
-            //List<BeschaeftigungsArtModel> alleBeschaeftigungen = new List<BeschaeftigungsArtModel>();
-            //List<BrancheModel> alleBranchen = new List<BrancheModel>();
+            List<BeschaeftigungModel> alleBeschaeftigungen = new List<BeschaeftigungModel>();
+            List<BrancheModel> alleBranchen = new List<BrancheModel>();
 
-            //foreach (var branche in KreditVerwaltung.BranchenLaden())
-            //{
-            //    alleBranchen.Add(new BrancheModel()
-            //    {
-            //        ID = branche.ID.ToString(),
-            //        Bezeichnung = branche.Bezeichnung
-            //    });
-            //}
+            foreach (var branche in KreditVerwaltung.BranchenLaden())
+            {
+                alleBranchen.Add(new BrancheModel()
+                {
+                    ID = branche.ID.ToString(),
+                    Bezeichnung = branche.Bezeichnung
+                });
+            }
 
-            //foreach (var beschaeftigungsArt in KreditVerwaltung.BeschaeftigungsArtenLaden())
-            //{
-            //    alleBeschaeftigungen.Add(new BeschaeftigungsArtModel()
-            //    {
-            //        ID = beschaeftigungsArt.ID.ToString(),
-            //        Bezeichnung = beschaeftigungsArt.Bezeichnung
-            //    });
-            //}
+            foreach (var beschaeftigung in KreditVerwaltung.BeschaeftigungenLaden())
+            {
+                alleBeschaeftigungen.Add(new BeschaeftigungModel()
+                {
+                    ID = beschaeftigung.ID.ToString(),
+                    Bezeichnung = beschaeftigung.Bezeichnung
+                });
+            }
 
             ArbeitgeberModel model = new ArbeitgeberModel()
             {
-                //AlleBeschaeftigungen = alleBeschaeftigungen,
-                //AlleBranchen = alleBranchen,
-                ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
+                AlleBeschaeftigungen = alleBeschaeftigungen,
+                AlleBranchen = alleBranchen,
+                ID_Kunde = int.Parse(Request.Cookies["id"].Value)
             };
 
             return View(model);
@@ -118,51 +121,243 @@ namespace _DB_AG__Online_Kredit.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Arbeitgeber(ArbeitgeberModel model)
         {
+            Debug.WriteLine("HttpPost: Kredit - Arbeitgeber");
+
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+                if (KreditVerwaltung.ArbeitgeberSpeichern(
+                                                model.Firma,
+                                                model.ID_BeschaeftigungsArt,
+                                                model.ID_Branche,
+                                                model.BeschaeftigungSeit,
+                                                model.ID_Kunde))
+                {
+                    return RedirectToAction("PersönlicheDaten");
+                }
+            }
             return View();
         }
 
-        public ActionResult KontoInformationen()
-        {
-            return View();
-        }
+
+
 
 
         [HttpGet]
         public ActionResult PersönlicheDaten()
         {
+            Debug.WriteLine("HttpGet: Kredit - PersönlicheDaten");
+
+            List<BildungsModel> alleBildungsAngaben = new List<BildungsModel>();
+            List<FamilienstandModel> alleFamilienStandAngaben = new List<FamilienstandModel>();
+            List<IdentifikationsModel> alleIdentifikationsangaben = new List<IdentifikationsModel>();
+            List<StaatsbuergerschaftsModel> alleStaatsbuergerschaftsAngaben = new List<StaatsbuergerschaftsModel>();
+            List<TitelModel> alleTitelAngaben = new List<TitelModel>();
+            List<WohnartModel> alleWohnartAngaben = new List<WohnartModel>();
+
+            /// Lade Daten aus Logic
+            foreach (var bildungsAngabe in KreditVerwaltung.BildungsangabenLaden())
+            {
+                alleBildungsAngaben.Add(new BildungsModel()
+                {
+                    ID = bildungsAngabe.ID.ToString(),
+                    Bezeichnung = bildungsAngabe.Bezeichnung
+                });
+            }
+
+            foreach (var familienStand in KreditVerwaltung.FamilienstandLaden())
+            {
+                alleFamilienStandAngaben.Add(new FamilienstandModel()
+                {
+                    ID = familienStand.ID.ToString(),
+                    Bezeichnung = familienStand.Bezeichnung
+                });
+            }
+            foreach (var Identifikationsangabe in KreditVerwaltung.IdentifikationsangabenLaden())
+            {
+                alleIdentifikationsangaben.Add(new IdentifikationsModel()
+                {
+                    ID = Identifikationsangabe.ID.ToString(),
+                    Bezeichnung = Identifikationsangabe.Bezeichnung
+                });
+            }
+            foreach (var land in KreditVerwaltung.LaenderLaden())
+            {
+                alleStaatsbuergerschaftsAngaben.Add(new StaatsbuergerschaftsModel()
+                {
+                    ID = land.ID,
+                    Bezeichnung = land.Bezeichnung
+                });
+            }
+            foreach (var titel in KreditVerwaltung.TitelLaden())
+            {
+                alleTitelAngaben.Add(new TitelModel()
+                {
+                    ID = titel.ID.ToString(),
+                    Bezeichnung = titel.Bezeichnung
+                });
+            }
+            foreach (var wohnart in KreditVerwaltung.WohnartenLaden())
+            {
+                alleWohnartAngaben.Add(new WohnartModel()
+                {
+                    ID = wohnart.ID.ToString(),
+                    Bezeichnung = wohnart.Bezeichnung
+                });
+            }
+
 
             PersönlicheDatenModel model = new PersönlicheDatenModel()
             {
-                ID_Kunde = int.Parse(TempData["id"].ToString())
-
+                AlleBildungsangaben = alleBildungsAngaben,
+                AlleFamilienstandangaben = alleFamilienStandAngaben,
+                AlleIdentifikationsangaben = alleIdentifikationsangaben,
+                AlleStaatsbuergerschaftsangaben = alleStaatsbuergerschaftsAngaben,
+                AlleTitelangaben = alleTitelAngaben,
+                AlleWohnartangaben = alleWohnartAngaben,
+                ID_Kunde = int.Parse(Request.Cookies["id"].Value)
             };
+            return View(model);
+        }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PersönlicheDaten(PersönlicheDatenModel model)
+        {
+            Debug.WriteLine("HttpPost: Kredit - PersönlicheDaten");
+
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+                if (KreditVerwaltung.PersönlicheDatenSpeichern(
+                                                model.ID_Titel,
+                                                model.Geschlecht == Geschlecht.Männlich ? "m" : "w",
+                                                model.Geburtsdatum,
+                                                model.Vorname,
+                                                model.Nachname,
+                                                model.ID_Bildung,
+                                                model.ID_Familienstand,
+                                                model.ID_Identifikationsart,
+                                                model.IdentifikationsNummer,
+                                                model.ID_Staatsbuergerschaft,
+                                                model.ID_Wohnart,
+                                                model.ID_Kunde))
+                {
+                    return RedirectToAction("KontoInformationen");
+                }
+            }
             return View();
+        }
+
+
+
+        [HttpGet]
+        public ActionResult KontoInformationen()
+        {
+            Debug.WriteLine("HttpGet: KonsumKredit - KontoInformationen");
+
+            KontoInformationsModel model = new KontoInformationsModel()
+            {
+                ID_Kunde = int.Parse(Request.Cookies["id"].Value)
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult PersönlicheDaten(PersönlicheDatenModel model)
+        [ValidateAntiForgeryToken]
+        public ActionResult KontoInformationen(KontoInformationsModel model)
         {
+            Debug.WriteLine("HttpPost: KonsumKredit - KontoInformationen");
+
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+                if (KreditVerwaltung.KontoInformationenSpeichern(
+                                                model.BankName,
+                                                model.IBAN,
+                                                model.BIC,
+                                                model.NeuesKonto,
+                                                model.ID_Kunde))
+                {
+                    return RedirectToAction("KontaktDaten");
+                }
+            }
+
             return View();
         }
 
 
-        //public ActionResult KontoInformationen(KontoInformationenModel model)
+
+        [HttpGet]
+        public ActionResult KontaktDaten()
+        {
+            Debug.WriteLine("HttpGet: Kredit - KontaktDaten");
+
+
+            List<StaatsbuergerschaftsModel> alleLaender = new List<StaatsbuergerschaftsModel>();
+
+            foreach (var land in KreditVerwaltung.LaenderLaden())
+            {
+                alleLaender.Add(new StaatsbuergerschaftsModel()
+                {
+                    ID = land.ID,
+                    Bezeichnung = land.Bezeichnung
+                });
+            }
+
+                    
+                KontaktdatenModel model = new KontaktdatenModel()
+            {
+                ID_Kunde = int.Parse(Request.Cookies["id"].Value)
+            };
+
+
+                return View(model);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult KontaktDaten(KontaktdatenModel model)
+        {
+            Debug.WriteLine("HttpPost: Kredit - KontaktDaten");
+
+            if (ModelState.IsValid)
+            {
+                if (KreditVerwaltung.KontaktdatenSpeichern(
+                    model.Straße, 
+                    model.Hausnummer,  
+                    model.EMail,
+                    model.TelefonNummer, 
+                    model.ID_Kunde,
+                    model.Ort,
+                    model.PLZ,
+                    model.Land
+                    ))
+                {
+                    return RedirectToAction("Zusammenfassung");
+                }
+            }
+
+            return View(model);
+        }
+
+
+
+        //public ActionResult Zusammenfassung()
         //{
         //    return View();
         //}
-
-        public ActionResult Zusammenfassung()
-        {
-            return View();
-        }
 
         //public ActionResult Zusammenfassung(ZusammenfassungModel model)
         //{
         //    return View();
         //}
 
+        //}
     }
 }

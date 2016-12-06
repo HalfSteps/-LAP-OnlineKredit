@@ -26,7 +26,7 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
         }
     
         public DbSet<Arbeitgeber> AlleArbeitgeber { get; set; }
-        public DbSet<BeschaeftigungsArt> AlleBeschaeftigungsaArten { get; set; }
+        public DbSet<BeschaeftigungsArt> AlleBeschaeftigungsArten { get; set; }
         public DbSet<Branche> AlleBranchen { get; set; }
         public DbSet<Einstellungen> AlleEinstellungen { get; set; }
         public DbSet<Familienstand> AlleFamilienstandAngaben { get; set; }

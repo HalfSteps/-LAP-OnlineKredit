@@ -740,7 +740,7 @@
         </Association>
         <EntityContainer Name="dbKreditRechnerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AlleArbeitgeber" EntityType="dbKreditRechnerModel.Arbeitgeber" />
-          <EntitySet Name="AlleBeschaeftigungsaArten" EntityType="dbKreditRechnerModel.BeschaeftigungsArt" />
+          <EntitySet Name="AlleBeschaeftigungsArten" EntityType="dbKreditRechnerModel.BeschaeftigungsArt" />
           <EntitySet Name="AlleBranchen" EntityType="dbKreditRechnerModel.Branche" />
           <EntitySet Name="AlleEinstellungen" EntityType="dbKreditRechnerModel.Einstellungen" />
           <EntitySet Name="AlleFamilienstandAngaben" EntityType="dbKreditRechnerModel.Familienstand" />
@@ -755,7 +755,7 @@
           <EntitySet Name="AlleTitel" EntityType="dbKreditRechnerModel.Titel" />
           <EntitySet Name="AlleWohnarten" EntityType="dbKreditRechnerModel.Wohnart" />
           <AssociationSet Name="FK__tblArbeit__FKBes__36B12243" Association="Self.FK__tblArbeit__FKBes__36B12243">
-            <End Role="tblBeschaeftigungsart" EntitySet="AlleBeschaeftigungsaArten" />
+            <End Role="tblBeschaeftigungsart" EntitySet="AlleBeschaeftigungsArten" />
             <End Role="tblArbeitgeber" EntitySet="AlleArbeitgeber" />
           </AssociationSet>
           <AssociationSet Name="FK__tblArbeit__FKBra__37A5467C" Association="Self.FK__tblArbeit__FKBra__37A5467C">
@@ -856,7 +856,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AlleBeschaeftigungsaArten">
+          <EntitySetMapping Name="AlleBeschaeftigungsArten">
             <EntityTypeMapping TypeName="dbKreditRechnerModel.BeschaeftigungsArt">
               <MappingFragment StoreEntitySet="tblBeschaeftigungsart">
                 <ScalarProperty Name="ID" ColumnName="IDBeschaeftigungsart" />
