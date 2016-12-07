@@ -438,6 +438,7 @@
     <Compile Include="Models\KontaktdatenModel.cs" />
     <Compile Include="Models\KontoInformationsModel.cs" />
     <Compile Include="Models\NachschlageModel.cs" />
+    <Compile Include="Models\OrtschaftsModel.cs" />
     <Compile Include="Models\PersönlicheDatenModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

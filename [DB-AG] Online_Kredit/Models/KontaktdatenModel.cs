@@ -16,9 +16,8 @@ namespace _DB_AG__Online_Kredit.Models
         public int ID_Kunde { get; set; }
         public string Ort { get; set; }
         public string PLZ { get; set; }
-        public string Land { get; set; }
 
-        public List<StaatsbuergerschaftsModel> AlleLaender { get; set; }
+        public List<OrtschaftsModel> AlleOrte { get; set; }
 
     }
 }
