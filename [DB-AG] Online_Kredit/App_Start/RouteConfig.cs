@@ -18,6 +18,12 @@ namespace _DB_AG__Online_Kredit
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Admin",
+                url: "{controllerhome}/{controlleradmin}/{action}",
+                defaults: new { controllerhome = "Admin", controlleradmin = "Admin", action = "AdminLogin" }
+                );
         }
     }
 }

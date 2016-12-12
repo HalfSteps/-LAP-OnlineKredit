@@ -374,6 +374,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminVerwaltung.cs" />
     <Compile Include="Arbeitgeber.cs">
       <DependentUpon>OnlineKreditModel.tt</DependentUpon>
     </Compile>

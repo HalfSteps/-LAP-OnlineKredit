@@ -300,18 +300,19 @@ namespace _DB_AG__Online_Kredit.Controllers
 
             List<StaatsbuergerschaftsModel> alleLaender = new List<StaatsbuergerschaftsModel>();
 
-            foreach (var land in KreditVerwaltung.LaenderLaden())
+            foreach (var landauswahl in KreditVerwaltung.LaenderLaden())
             {
                 alleLaender.Add(new StaatsbuergerschaftsModel()
                 {
-                    ID = land.ID,
-                    Bezeichnung = land.Bezeichnung
+                    ID = landauswahl.ID,
+                    Bezeichnung = landauswahl.Bezeichnung
                 });
             }
 
-                    
-                KontaktdatenModel model = new KontaktdatenModel()
+
+            KontaktdatenModel model = new KontaktdatenModel()
             {
+                AlleLaender = alleLaender,
                 ID_Kunde = int.Parse(Request.Cookies["id"].Value)
             };
 
@@ -335,8 +336,8 @@ namespace _DB_AG__Online_Kredit.Controllers
                     model.TelefonNummer, 
                     model.ID_Kunde,
                     model.Ort,
-                    model.PLZ,
-                    model.Land
+                    model.ID_Land,
+                    model.ID_PLZ
                     ))
                 {
                     return RedirectToAction("Zusammenfassung");

@@ -43,6 +43,15 @@
             </div>
             <div class="row">
                 <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3" style="text-align: right">
+                    @Html.LabelFor(model => model.ID_Land, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Html.DropDownListFor(model => model.ID_Land, new SelectList(Model.AlleLaender, "ID", "Bezeichnung"))
+                    @Html.ValidationMessageFor(model => model.ID_Land, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3" style="text-align: right">
                     @Html.LabelFor(model => model.Ort, htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -52,20 +61,11 @@
             </div>
             <div class="row">
                 <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3" style="text-align: right">
-                    @Html.LabelFor(model => model.Land, htmlAttributes: new { @class = "control-label" })
+                    @Html.LabelFor(model => model.ID_PLZ, htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    @Html.DropDownListFor(model => model.Land, new SelectList(Model.AlleLaender, "ID", "Bezeichnung"), "bitte wählen")
-                    @Html.ValidationMessageFor(model => model.Land, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3" style="text-align: right">
-                    @Html.LabelFor(model => model.PLZ, htmlAttributes: new { @class = "control-label" })
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    @Html.EditorFor(model => model.PLZ, new { htmlAttributes = new { @class = "form-control", placeholder = "0" } })
-                    @Html.ValidationMessageFor(model => model.PLZ, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.ID_PLZ, new { htmlAttributes = new { @class = "form-control", placeholder = "0" } })
+                    @Html.ValidationMessageFor(model => model.ID_PLZ, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">

@@ -579,7 +579,7 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
         }
 
 
-        public static bool KontaktdatenSpeichern(string strasse, string hausnummer, string mail, string telefonNummer, int idKunde, string idLand, string ort, string plz)
+        public static bool KontaktdatenSpeichern(string strasse, string hausnummer, string mail, string telefonNummer, int idKunde, string ort, string idplz, string idland)
         {
             Debug.WriteLine("KreditVerwaltung: KontaktDatenSpeichern");
             Debug.Indent();
@@ -611,9 +611,9 @@ namespace _DB_AG__Online_Kredit.BusinessLogic
                         Ort newOrtKontakt = new Ort()
                         {
                             ID = idKunde,
-                            FKLand = idLand,
-                            PLZ = plz,
-                            Bezeichnung = ort
+                            PLZ = idplz,
+                            Bezeichnung = ort,
+                            FKLand = idland
                             
                         };
                         context.AlleOrte.Add(newOrtKontakt);
